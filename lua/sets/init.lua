@@ -1,3 +1,4 @@
+local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
 vim.g.loaded_netrwPlugin = 1
 vim.g.loaded_netrw = 1
 vim.g.mapleader = ' '
@@ -24,4 +25,5 @@ vim.opt.inccommand = 'split'
 vim.opt.cursorline = true
 vim.opt.scrolloff = 10
 vim.g.have_nerd_font = true
+vim.opt.rtp:prepend(lazypath)
 require 'sets.db'
