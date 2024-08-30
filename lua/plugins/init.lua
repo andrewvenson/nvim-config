@@ -2,7 +2,6 @@ return {
   require 'plugins.dadbod',
   require 'plugins.neo-tree',
   require 'plugins.gitsigns',
-  require 'plugins.debug',
   require 'plugins.which-key',
   require 'plugins.vim-tmux-navigator',
   require 'plugins.telescope',
@@ -18,4 +17,8 @@ return {
   require 'plugins.comments',
   require 'plugins.luvit-meta',
   require 'plugins.copilot',
+  require 'plugins.debug',
+  require 'plugins.neotest-plenary',
+  require 'plugins.neotest',
+  require 'plugins.neotest2',
 }
