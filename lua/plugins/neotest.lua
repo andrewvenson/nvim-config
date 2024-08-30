@@ -6,11 +6,12 @@ return {
     'nvim-neotest/nvim-nio',
     'haydenmeade/neotest-jest',
   },
-  opts = function()
+  opts = { adapters = { 'neotest-plenary' } },
+  config = function(_, opts)
     table.insert(
-      { 'neotest-plenary' },
+      opts.adapters,
       require 'neotest-jest' {
-        jestCommand = 'npm test --',
+        jestCommand = 'npm run test-single --',
         jestConfigFile = 'jest.config.ts',
         env = { CI = true },
         cwd = function()
@@ -18,8 +19,7 @@ return {
         end,
       }
     )
-  end,
-  config = function(_, opts)
+
     local neotest_ns = vim.api.nvim_create_namespace 'neotest'
     vim.diagnostic.config({
       virtual_text = {
