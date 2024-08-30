@@ -1,7 +1,7 @@
 require 'bootstrap_lazy'
 require 'sets'
 require 'keymaps'
-
+require 'api'
 require('lazy').setup({
   require 'plugins',
 }, {
@@ -9,6 +9,3 @@ require('lazy').setup({
     icons = {},
   },
 })
-
--- The line beneath this is called `modeline`. See `:help modeline`
--- vim: ts=2 sts=2 sw=2 et
