@@ -17,4 +17,5 @@ return {
   require 'plugins.lazydev',
   require 'plugins.comments',
   require 'plugins.luvit-meta',
+  require 'plugins.copilot',
 }
