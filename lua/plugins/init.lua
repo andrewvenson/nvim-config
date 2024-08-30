@@ -18,7 +18,5 @@ return {
   require 'plugins.luvit-meta',
   require 'plugins.copilot',
   require 'plugins.debug',
-  require 'plugins.neotest-plenary',
   require 'plugins.neotest',
-  require 'plugins.neotest2',
 }

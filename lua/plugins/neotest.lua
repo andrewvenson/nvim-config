@@ -1,7 +1,23 @@
 return {
   'nvim-neotest/neotest',
-  dependencies = { 'nvim-neotest/nvim-nio' },
-  opts = { adapters = { 'neotest-plenary' } },
+  dependencies = {
+    'nvim-neotest/neotest-plenary',
+    'nvim-neotest/nvim-nio',
+    'haydenmeade/neotest-jest',
+  },
+  opts = function()
+    table.insert(
+      { 'neotest-plenary' },
+      require 'neotest-jest' {
+        jestCommand = 'npm test --',
+        jestConfigFile = 'jest.config.ts',
+        env = { CI = true },
+        cwd = function()
+          return vim.fn.getcwd()
+        end,
+      }
+    )
+  end,
   config = function(_, opts)
     local neotest_ns = vim.api.nvim_create_namespace 'neotest'
     vim.diagnostic.config({
@@ -13,6 +29,9 @@ return {
         end,
       },
     }, neotest_ns)
+
+    opts.status = { virtual_text = true }
+    opts.output = { open_on_run = true }
 
     if opts.adapters then
       local adapters = {}
