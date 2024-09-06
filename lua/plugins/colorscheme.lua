@@ -1,11 +1,12 @@
 return {
-  'craftzdog/solarized-osaka.nvim',
-  lazy = false,
-  priority = 1000,
-  opts = {},
-  init = function()
-    vim.cmd.colorscheme 'solarized-osaka'
-    -- You can configure highlights by doing something like:
-    vim.cmd.hi 'Comment gui=none'
-  end,
+  { 'nvim-treesitter/nvim-treesitter', build = ':TSUpdate' },
+  {
+    'baliestri/aura-theme',
+    lazy = false,
+    priority = 1000,
+    config = function(plugin)
+      vim.opt.rtp:append(plugin.dir .. '/packages/neovim')
+      vim.cmd [[colorscheme aura-dark-soft-text]]
+    end,
+  },
 }
