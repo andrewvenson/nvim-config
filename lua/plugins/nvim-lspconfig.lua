@@ -72,7 +72,6 @@ return {
     capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
 
     local servers = {
-      tsserver = {},
       lua_ls = {
         -- cmd = {...},
         -- filetypes = { ...},
