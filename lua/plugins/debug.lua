@@ -16,8 +16,6 @@ return {
   },
 
   keys = function(_, keys)
-    local dap = require 'dap'
-    local dapui = require 'dapui'
     return {
       { '<leader>d', '', desc = '+debug', mode = { 'n', 'v' } },
       {
@@ -196,8 +194,6 @@ return {
         port = '${port}',
         executable = {
           command = 'node',
-          -- 💀 Make sure to update this path to point to your installation
-          --
           args = { '/Users/andrewvenson/code/js-debug/src/dapDebugServer.js', '${port}' },
         },
       }
@@ -219,7 +215,7 @@ return {
     local js_filetypes = { 'typescript', 'javascript', 'typescriptreact', 'javascriptreact' }
 
     local vscode = require 'dap.ext.vscode'
-    vscode.type_to_filetypes['node'] = js_filetypes
+
     vscode.type_to_filetypes['pwa-node'] = js_filetypes
 
     for _, language in ipairs(js_filetypes) do
