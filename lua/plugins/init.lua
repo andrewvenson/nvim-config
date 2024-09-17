@@ -12,6 +12,7 @@ return {
   require 'plugins.vim-fugitive',
   require 'plugins.vim-sleuth',
   require 'plugins.nvim-cmp',
+  require 'plugins.copilot-cmp',
   require 'plugins.mini',
   require 'plugins.lazydev',
   require 'plugins.comments',
