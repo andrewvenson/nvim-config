@@ -42,6 +42,7 @@ vim.keymap.set('n', '<leader>qt', function()
   end
 end, { desc = 'Runs prettier on code project' })
 vim.keymap.set('n', '<leader>j', function()
+  vim.cmd 'normal! gg"+yG'
   os.execute 'echo "$(pbpaste)" > ~/table_data/temp_table_data'
   local file = io.open('/Users/andrewvenson/table_data/temp_table_data', 'r')
 
@@ -104,14 +105,15 @@ vim.keymap.set('n', '<leader>j', function()
     end
   end
 
-  os.execute('echo ' .. "'" .. '{ "results": [' .. "' >> sql.json")
+  os.execute("echo '" .. "{' >> sql.json")
+  os.execute("echo '" .. '  "results": [' .. "' >> sql.json")
   local table_length = 0
   for _, _ in ipairs(rows) do
     table_length = table_length + 1
   end
 
   for k, v in ipairs(rows) do
-    os.execute "echo '{' >> sql.json"
+    os.execute "echo '    {' >> sql.json"
     local row_length = 0
     local current_row_index = 1
     for _, _ in pairs(v) do
@@ -119,19 +121,21 @@ vim.keymap.set('n', '<leader>j', function()
     end
     for key, val in pairs(v) do
       if current_row_index == row_length then
-        os.execute("echo '" .. '"' .. key .. '"' .. ':' .. '"' .. val .. '"' .. "' >> sql.json")
+        os.execute("echo '" .. '      "' .. key .. '"' .. ':' .. '"' .. val .. '"' .. "' >> sql.json")
       else
-        os.execute("echo '" .. '"' .. key .. '"' .. ':' .. '"' .. val .. '",' .. "' >> sql.json")
+        os.execute("echo '" .. '      "' .. key .. '"' .. ':' .. '"' .. val .. '",' .. "' >> sql.json")
       end
       current_row_index = current_row_index + 1
     end
     if table_length ~= k then
-      os.execute "echo '},' >> sql.json"
+      os.execute "echo '    },' >> sql.json"
     else
-      os.execute "echo '}' >> sql.json"
+      os.execute "echo '    }' >> sql.json"
     end
   end
-  os.execute("echo '" .. "]}' >> sql.json")
+  os.execute("echo '" .. "  ]' >> sql.json")
+  os.execute "echo '}' >> sql.json"
   os.execute 'pbcopy < sql.json; rm sql.json'
   os.execute 'rm ~/table_data/temp_table_data'
+  print 'Formatted sql response to json'
 end, { desc = 'Copies sql output to json in clipboard' })
