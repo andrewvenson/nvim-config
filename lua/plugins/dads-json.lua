@@ -39,6 +39,7 @@ return {
             local i = 0
             local rowI = 1
             local row = {}
+            local stringx = '\\"'
             while rowI < column_iter_count do
               local a, b = string.find(line, '|', i + 1)
               if b ~= nil and a ~= nil then
@@ -47,13 +48,13 @@ return {
                 local column = columns[rowI]
                 local leading_stripped = string.gsub(field, '^%s+', '')
                 local fully_stripped = string.gsub(leading_stripped, '%s+$', '')
-                row[column] = string.gsub(fully_stripped, '"', "'")
+                row[column] = string.gsub(fully_stripped, '"', stringx)
               else
                 local field2 = string.sub(line, i + 1)
                 local lastColumn = columns[rowI]
                 local leading_stripped2 = string.gsub(field2, '^%s+', '')
                 local fully_stripped2 = string.gsub(leading_stripped2, '%s+$', '')
-                row[lastColumn] = string.gsub(fully_stripped2, '"', "'")
+                row[lastColumn] = string.gsub(fully_stripped2, '"', stringx)
               end
               rowI = rowI + 1
             end
