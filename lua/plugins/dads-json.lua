@@ -8,6 +8,7 @@ return {
     local columns = {}
     local rows = {}
     local main_loop = true
+    local column_iter_count = 1
 
     while main_loop do
       if file ~= nil then
@@ -31,14 +32,14 @@ return {
               loop = false
               break
             end
+            column_iter_count = column_iter_count + 1
           end
         else
           if loop_iter ~= 2 then
             local i = 0
             local rowI = 1
             local row = {}
-            local loop = true
-            while loop do
+            while rowI < column_iter_count do
               local a, b = string.find(line, '|', i + 1)
               if b ~= nil and a ~= nil then
                 local field = string.sub(line, i + 1, b - 1)
@@ -47,21 +48,12 @@ return {
                 local leading_stripped = string.gsub(field, '^%s+', '')
                 local fully_stripped = string.gsub(leading_stripped, '%s+$', '')
                 row[column] = string.gsub(fully_stripped, '"', "'")
-
-                local c, d = string.find(line, '|', i + 1)
-                if c == nil and d == nil then
-                  local field2 = string.sub(line, i + 1)
-                  local lastColumn = columns[rowI]
-
-                  local leading_stripped2 = string.gsub(field2, '^%s+', '')
-                  local fully_stripped2 = string.gsub(leading_stripped2, '%s+$', '')
-                  row[lastColumn] = string.gsub(fully_stripped2, '"', "'")
-                  loop = false
-                  break
-                end
               else
-                loop = false
-                break
+                local field2 = string.sub(line, i + 1)
+                local lastColumn = columns[rowI]
+                local leading_stripped2 = string.gsub(field2, '^%s+', '')
+                local fully_stripped2 = string.gsub(leading_stripped2, '%s+$', '')
+                row[lastColumn] = string.gsub(fully_stripped2, '"', "'")
               end
               rowI = rowI + 1
             end
@@ -82,17 +74,17 @@ return {
     for k, v in ipairs(rows) do
       os.execute "echo '    {' >> sql.json"
       local row_length = 0
-      local current_row_index = 1
+      local current_row_index = 0
       for _, _ in pairs(v) do
         row_length = row_length + 1
       end
       for key, val in pairs(v) do
+        current_row_index = current_row_index + 1
         if current_row_index == row_length then
           os.execute("echo '" .. '      "' .. key .. '"' .. ':' .. '"' .. val .. '"' .. "' >> sql.json")
         else
           os.execute("echo '" .. '      "' .. key .. '"' .. ':' .. '"' .. val .. '",' .. "' >> sql.json")
         end
-        current_row_index = current_row_index + 1
       end
       if table_length ~= k then
         os.execute "echo '    },' >> sql.json"
