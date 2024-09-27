@@ -1,5 +1,4 @@
 local prettier = require 'plugins.prettier'
-
 return {
   jest = function()
     local fp = vim.fn.expand '%:p' -- gives full path of file

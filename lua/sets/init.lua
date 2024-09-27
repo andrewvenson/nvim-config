@@ -1,4 +1,9 @@
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
+local config = vim.fn.stdpath 'config'
+local macro = vim.fn.readfile(config .. '/lua/macros/interface-to-object')
+print(macro)
+vim.fn.setreg('a', macro)
+
 vim.g.loaded_netrwPlugin = 1
 vim.g.loaded_netrw = 1
 vim.g.mapleader = ' '
