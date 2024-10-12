@@ -27,6 +27,7 @@ vim.opt.list = true
 vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
 vim.opt.inccommand = 'split'
 vim.opt.cursorline = true
+vim.opt.background = 'dark'
 vim.opt.scrolloff = 10
 vim.g.have_nerd_font = true
 vim.opt.rtp:prepend(lazypath)
